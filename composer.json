@@ -1,0 +1,34 @@
+{
+    "name": "ilaravelpro/iproduct",
+    "description": "iLaravel iProduct",
+    "keywords": ["laravel","auto pro", "login", "register", "verify"],
+    "homepage": "https://ilaravel.iamir.net/packages/iproduct",
+    "license": "MIT",
+    "authors": [
+        {
+            "name" : "iamirnet",
+            "email" : "me@iamir.net",
+            "homepage": "https://iamir.net",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/app/",
+            "iLaravel\\iProduct\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "iLaravel\\iProduct\\Providers\\AppServiceProvider",
+                "iLaravel\\iProduct\\Providers\\RouteServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
