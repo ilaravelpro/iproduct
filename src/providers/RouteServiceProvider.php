@@ -1,18 +1,17 @@
 <?php
-
-
-/**
- * Author: Amir Hossein Jahani | iAmir.net
- * Last modified: 9/13/20, 8:06 AM
- * Copyright (c) 2020. Powered by iamir.net
+/*
+ * Author: Amirhossein Jahani | iAmir.net
+ * Email: me@iamir.net
+ * Mobile No: +98-9146941147
+ * Last modified: 2021/02/05 Fri 06:39 AM IRST
+ * Copyright (c) 2020-2022. Powered by iAmir.net
  */
 
 namespace iLaravel\iProduct\Providers;
 
 use Illuminate\Routing\Router;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
-class RouteServiceProvider extends ServiceProvider
+class RouteServiceProvider extends \Illuminate\Foundation\Support\Providers\RouteServiceProvider
 {
     public function boot()
     {
@@ -25,7 +24,7 @@ class RouteServiceProvider extends ServiceProvider
     }
     public function map(Router $router)
     {
-        if (iproduct('routes.api.status', true)) $this->apiRoutes($router);
+        $this->apiRoutes($router);
     }
 
     public function apiRoutes(Router $router)
