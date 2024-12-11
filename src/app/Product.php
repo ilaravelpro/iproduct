@@ -22,9 +22,10 @@ class Product extends \iLaravel\Core\iApp\Model
     {
         return $this->belongsTo(imodal('User'));
     }
-    public function type_item()
+
+    public function model_item()
     {
-        return $this->hasOne(imodal(ucfirst($this->type)), 'product_id');
+        return $this->hasOne(imodal($this->model), 'product_id');
     }
 
     public function tags()
