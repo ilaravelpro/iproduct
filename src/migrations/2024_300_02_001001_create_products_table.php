@@ -30,10 +30,6 @@ return new class extends Migration
             $table->bigInteger('model_id')->nullable()->unsigned();
             $table->string('title')->nullable();
             $table->string('slug')->nullable();
-            $table->bigInteger('weight')->nullable();
-            $table->bigInteger('size_x')->nullable();
-            $table->bigInteger('size_y')->nullable();
-            $table->bigInteger('size_z')->nullable();
             $table->bigInteger('quantity_default')->nullable();
             $table->bigInteger('quantity_min')->nullable();
             $table->bigInteger('quantity_max')->nullable();
@@ -48,7 +44,6 @@ return new class extends Migration
             $table->longText('content')->nullable();
             $table->boolean('is_virtual')->default(0);
             $table->boolean('is_stackable')->default(0);
-            $table->boolean('is_shippable')->default(0);
             $table->integer('is_tax')->default(0);
             $table->integer('is_publishing')->default(0);
             $table->integer('is_published')->default(0);

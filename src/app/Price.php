@@ -16,6 +16,7 @@ class Price extends \iLaravel\Core\iApp\Model
     public static $s_end = 728999999;
 
     public $with_resource_data = ['warehouse', 'product'];
+
     public function creator()
     {
         return $this->belongsTo(imodal('User'));
@@ -28,8 +29,9 @@ class Price extends \iLaravel\Core\iApp\Model
 
     public function warehouse()
     {
-        return $this->belongsTo(imodal('Warehouse'));
+        return ($model = imodal('Warehouse')) ? $this->belongsTo($model) : null;
     }
+
     public function kids()
     {
         return $this->hasMany(imodal('PriceOld'), 'price_id');
@@ -61,14 +63,14 @@ class Price extends \iLaravel\Core\iApp\Model
         return iproduct_round_currency($this->price_sale - $this->discount_amount);
     }
 
-    public function rules($request, $action, $arg1 = null, $arg2 = null) {
+    public function rules($request, $action, $arg1 = null, $arg2 = null)
+    {
         $rules = [];
         switch ($action) {
             case 'store':
             case 'update':
                 $rules = array_merge($rules, [
                     //'product_id' => "required|exists:products,id",
-                    'warehouse_id' => "required|exists:warehouses,id",
                     'price_first' => "required|numeric",
                     'price_sale' => "required|numeric",
                     'stock' => "nullable|numeric",
@@ -77,6 +79,8 @@ class Price extends \iLaravel\Core\iApp\Model
                     'discount_start_at' => "nullable|date_format:Y-m-d H:i:s",
                     'discount_end_at' => "nullable|date_format:Y-m-d H:i:s",
                 ]);
+                if (imodal('Warehouse'))
+                    $rules['warehouse_id'] = "required|exists:warehouses,id";
                 break;
         }
         return $rules;

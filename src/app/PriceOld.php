@@ -32,7 +32,7 @@ class PriceOld extends \iLaravel\Core\iApp\Model
 
     public function warehouse()
     {
-        return $this->belongsTo(imodal('Warehouse'));
+        return ($model = imodal('Warehouse')) ? $this->belongsTo($model) : null;
     }
     public function firends()
     {
@@ -47,7 +47,6 @@ class PriceOld extends \iLaravel\Core\iApp\Model
                 $rules = array_merge($rules, [
                     'price_id' => "required|exists:prices,id",
                     'product_id' => "required|exists:products,id",
-                    'warehouse_id' => "required|exists:warehouses,id",
                     'price_first' => "required|numeric",
                     'stock' => "nullable|numeric",
                     'price_sale' => "required|numeric",
@@ -56,6 +55,8 @@ class PriceOld extends \iLaravel\Core\iApp\Model
                     'discount_start_at' => "nullable|date_format:Y-m-d H:i:s",
                     'discount_end_at' => "nullable|date_format:Y-m-d H:i:s",
                 ]);
+                if (imodal('Warehouse'))
+                    $rules['warehouse_id'] = "required|exists:warehouses,id";
                 break;
         }
         return $rules;
