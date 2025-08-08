@@ -49,7 +49,6 @@ trait Product
     }
 
 
-
     public function alerts()
     {
         return $this->hasMany(imodal('ProductAlert'), 'product_id', 'product_id');
@@ -107,6 +106,11 @@ trait Product
         return $this->hasMany(imodal('PriceOld'), 'product_id', 'product_id');
     }
 
+    public function additionalUpdate($request = null, $additional = null, $parent = null)
+    {
+        $this->updateProduct($request);
+        parent::additionalUpdate($request, $additional, $parent);
+    }
 
     public static function findByAny($value)
     {
