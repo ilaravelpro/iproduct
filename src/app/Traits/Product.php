@@ -28,8 +28,10 @@ trait Product
             return explode('.', $item)[0];
         }, $exceptAdditional);
         $rules = $this->rules($request, 'product', $this);
-        if (empty($rules))
+        if (empty($rules)) {
             $rules = imodal("Product")::getRules($request, @$this->product ? "update" : "store", @$this->product);
+            $rules['status'] = 'nullable|in:' . join( ',', $this->_statuses());
+        }
         $keys = array_keys($rules);
         $fields = handel_fields(array_values(array_unique($exceptAdditional)), $keys, $requestArray);
         $dataProduct = [];
@@ -46,6 +48,13 @@ trait Product
         $this->product_id = $product->id;
         $this->save();
         return $product;
+    }
+
+    public function getProductRules($request, $context = null)
+    {
+        $rules = imodal("Product")::getRules($request, @tap($context?:$this)->product ? "update" : "store", @(tap($context?:$this))->product);
+        $rules['status'] = 'nullable|in:' . join( ',', $this->_statuses());
+        return $rules;
     }
 
 
