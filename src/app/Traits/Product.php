@@ -8,6 +8,7 @@ trait Product
     {
         return $this->belongsTo(imodal('Product'), 'product_id');
     }
+
     public function getTitleAttribute()
     {
         return $this->product->title;
@@ -27,11 +28,7 @@ trait Product
         $exceptAdditional = array_map(function ($item) {
             return explode('.', $item)[0];
         }, $exceptAdditional);
-        $rules = $this->rules($request, 'product', $this);
-        if (empty($rules)) {
-            $rules = imodal("Product")::getRules($request, @$this->product ? "update" : "store", @$this->product);
-            $rules['status'] = 'nullable|in:' . join( ',', $this->_statuses());
-        }
+        $rules = tap($this->rules($request, 'product', $this) ?: $this->getProductRules($request));
         $keys = array_keys($rules);
         $fields = handel_fields(array_values(array_unique($exceptAdditional)), $keys, $requestArray);
         $dataProduct = [];
@@ -50,10 +47,10 @@ trait Product
         return $product;
     }
 
-    public function getProductRules($request, $context = null)
+    public function getProductRules($request, $context = null, $action = null)
     {
-        $rules = imodal("Product")::getRules($request, @tap($context?:$this)->product ? "update" : "store", @(tap($context?:$this))->product);
-        $rules['status'] = 'nullable|in:' . join( ',', $this->_statuses());
+        $rules = imodal("Product")::getRules($request, $action ?: (@tap($context ?: $this)->product ? "update" : "store"), @(tap($context ?: $this))->product);
+        $rules['status'] = 'nullable|in:' . join(',', $this->_statuses());
         return $rules;
     }
 
