@@ -48,6 +48,8 @@ class PriceOld extends \iLaravel\Core\iApp\Model
                     'price_id' => "required|exists:prices,id",
                     'product_id' => "required|exists:products,id",
                     'price_first' => "required|numeric",
+                    'unit' => "nullable|string",
+                    'quantity' => "nullable|double",
                     'stock' => "nullable|numeric",
                     'price_sale' => "required|numeric",
                     'discount_type' => "nullable|in:percent,value",

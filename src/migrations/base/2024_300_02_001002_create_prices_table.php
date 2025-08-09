@@ -30,6 +30,8 @@ return new class extends Migration
             $table->bigInteger('price_benefit')->nullable();
             $table->bigInteger('price_tax')->nullable();
             $table->bigInteger('price_pay')->nullable();
+            $table->bigInteger('unit')->nullable();
+            $table->double('quantity')->nullable();
             $table->bigInteger('stock')->nullable();
             $table->bigInteger('sales')->nullable();
             $table->bigInteger('presales')->nullable();

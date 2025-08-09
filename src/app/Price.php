@@ -73,6 +73,8 @@ class Price extends \iLaravel\Core\iApp\Model
                     //'product_id' => "required|exists:products,id",
                     'price_first' => "required|numeric",
                     'price_sale' => "required|numeric",
+                    'unit' => "nullable|string",
+                    'quantity' => "nullable|double",
                     'stock' => "nullable|numeric",
                     'discount_type' => "nullable|in:percent,value",
                     'currency' => "nullable|in:IRT",

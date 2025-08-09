@@ -109,6 +109,8 @@ class Product extends \iLaravel\Core\iApp\Model
 
             'prices.*.id' => "nullable|exists:prices,id",
             'prices.*.warehouse_id' => "required|exists:warehouses,id",
+            'prices.*.unit' => "nullable|string",
+            'prices.*.quantity' => "nullable|double",
             'prices.*.price_first' => "required|numeric",
             'prices.*.price_sale' => "required|numeric",
             'prices.*.discount_type' => "nullable|in:percent,value",
