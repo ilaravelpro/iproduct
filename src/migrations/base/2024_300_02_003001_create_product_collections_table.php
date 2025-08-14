@@ -28,6 +28,7 @@ return new class extends Migration
             $table->foreign('parent_id')->references('id')->on('product_collections')->onDelete('cascade');
             $table->string('title')->nullable();
             $table->string('slug')->nullable();
+            $table->string('type')->nullable()->default('product');
             $table->string('template')->nullable();
             $table->text('summary')->nullable();
             $table->longText('content')->nullable();

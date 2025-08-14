@@ -14,6 +14,7 @@ class ProductEdition extends \iLaravel\Core\iApp\Model
     public static $s_prefix = 'NMED';
     public static $s_start = 24300000;
     public static $s_end = 728999999;
+    protected $table = "product_editions";
 
     public function creator()
     {

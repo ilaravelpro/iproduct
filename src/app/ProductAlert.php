@@ -14,6 +14,7 @@ class ProductAlert extends \iLaravel\Core\iApp\Model
     public static $s_prefix = 'NMPTA';
     public static $s_start = 24300000;
     public static $s_end = 728999999;
+    protected $table = "product_alerts";
 
 
     public function creator()

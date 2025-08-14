@@ -18,6 +18,7 @@ class Product extends \iLaravel\Core\iApp\Model
 
     public $files = ['image'];
     public $with_resource_data = ['collection', 'terms'];
+    protected $table = "products";
     public function creator()
     {
         return $this->belongsTo(imodal('User'));

@@ -16,12 +16,15 @@ class ProductCollection extends \iLaravel\Core\iApp\Model
     public static $s_end = 728999999;
     public static $find_names = ['slug'];
 
+    protected $table = "product_collections";
+
     public $files = ['image'];
 
     public function creator()
     {
         return $this->belongsTo(imodal('User'));
     }
+
     public function products()
     {
         return $this->hasMany(imodal('Product'), 'collection_id');
@@ -38,6 +41,7 @@ class ProductCollection extends \iLaravel\Core\iApp\Model
                 $rules = array_merge($rules, [
                     'title' => "required|string",
                     'slug' => ['nullable','string'],
+                    'type' => "nullable|string",
                     'template' => "nullable|string",
                     'summary' => "nullable|string",
                     'content' => "nullable|string",

@@ -14,6 +14,7 @@ class Price extends \iLaravel\Core\iApp\Model
     public static $s_prefix = 'NMPE';
     public static $s_start = 24300000;
     public static $s_end = 728999999;
+    protected $table = "prices";
 
     public $with_resource_data = ['warehouse', 'product'];
 
