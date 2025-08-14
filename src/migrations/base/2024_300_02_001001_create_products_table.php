@@ -36,8 +36,8 @@ return new class extends Migration
             $table->bigInteger('sales')->default(0);
             $table->bigInteger('presales')->default(0);
             $table->double('avg_rates')->default(0);
-            $table->bigInteger('count_published')->nullable();
-            $table->integer('year_published')->nullable();
+            $table->bigInteger('count')->nullable();
+            $table->integer('year_production')->nullable();
             $table->string('type')->nullable();
             $table->string('template')->nullable();
             $table->text('summary')->nullable();
@@ -45,15 +45,15 @@ return new class extends Migration
             $table->boolean('is_virtual')->default(0);
             $table->boolean('is_stackable')->default(0);
             $table->integer('is_tax')->default(0);
-            $table->integer('is_publishing')->default(0);
-            $table->integer('is_published')->default(0);
+            $table->integer('is_production')->default(0);
+            $table->integer('is_produced')->default(0);
             $table->integer('is_buyout')->default(0);
             $table->integer('order')->default(0);
             $table->string('local')->nullable();
             $table->string('status')->default('draft');
-            $table->timestamp('first_published_at')->nullable();
-            $table->timestamp('last_published_at')->nullable();
-            $table->timestamp('published_at')->nullable();
+            $table->timestamp('first_produced_at')->nullable();
+            $table->timestamp('last_produced_at')->nullable();
+            $table->timestamp('produced_at')->nullable();
             $table->timestamps();
         });
     }

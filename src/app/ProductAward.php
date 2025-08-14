@@ -36,7 +36,7 @@ class ProductAward extends \iLaravel\Core\iApp\Model
                     'title' => "required|string",
                     'description' => "nullable|string",
                     'awarded_at' => "nullable|date_format:Y-m-d H:i:s",
-                    'status' => 'nullable|in:' . join( ',', iconfig('status.awards', iconfig('status.products'))),
+                    'status' => 'nullable|in:' . join( ',', $this->_statuses()),
                 ]);
                 break;
             case 'additional':

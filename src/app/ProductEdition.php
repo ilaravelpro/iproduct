@@ -21,7 +21,8 @@ class ProductEdition extends \iLaravel\Core\iApp\Model
         return $this->belongsTo(imodal('User'));
     }
 
-    public function rules($request, $action, $arg1 = null, $arg2 = null) {
+    public function rules($request, $action, $arg1 = null, $arg2 = null)
+    {
         $arg1 = $arg1 instanceof static ? $arg1 : (is_integer($arg1) ? static::find($arg1) : (is_string($arg1) ? static::findBySerial($arg1) : $arg1));
         $rules = [];
         $additionalRules = [];
@@ -34,7 +35,7 @@ class ProductEdition extends \iLaravel\Core\iApp\Model
                     'price_first' => "nullable|numeric|min:0",
                     'price_sale' => "nullable|numeric|min:0",
                     'edition_at' => "nullable|date_format:Y-m-d H:i:s",
-                    'status' => 'nullable|in:' . join( ',', iconfig('status.editions', iconfig('status.products'))),
+                    'status' => 'nullable|in:' . join(',', $this->_statuses()),
                 ]);
                 break;
             case 'additional':

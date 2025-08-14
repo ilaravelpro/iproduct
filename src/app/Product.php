@@ -19,6 +19,7 @@ class Product extends \iLaravel\Core\iApp\Model
     public $files = ['image'];
     public $with_resource_data = ['collection', 'terms'];
     protected $table = "products";
+
     public function creator()
     {
         return $this->belongsTo(imodal('User'));
@@ -151,7 +152,6 @@ class Product extends \iLaravel\Core\iApp\Model
                     'sales' => "nullable|string",
                     'presales' => "nullable|string",
                     'avg_rates' => "nullable|string",
-                    'type' => "nullable|string",
                     'template' => "nullable|string",
                     'summary' => "nullable|string",
                     'content' => "nullable|string",
@@ -159,15 +159,15 @@ class Product extends \iLaravel\Core\iApp\Model
                     'is_stackable' => "nullable|boolean",
                     'is_shippable' => "nullable|boolean",
                     'is_tax' => "nullable|boolean",
-                    'is_published' => "nullable|boolean",
+                    'is_produced' => "nullable|boolean",
                     'is_buyout' => "nullable|boolean",
                     'order' => "nullable|numeric",
-                    'count_published' => "nullable|numeric",
-                    'year_published' => "nullable|date_format:Y",
-                    'first_published_at' => "nullable|date_format:Y-m-d H:i:s",
-                    'last_published_at' => "nullable|date_format:Y-m-d H:i:s",
-                    'published_at' => "nullable|date_format:Y-m-d H:i:s",
-                    'status' => 'nullable|in:' . join( ',', iconfig('status.book_creators', iconfig('status.global'))),
+                    'count_produced' => "nullable|numeric",
+                    'year_produced' => "nullable|date_format:Y",
+                    'first_produced_at' => "nullable|date_format:Y-m-d H:i:s",
+                    'last_produced_at' => "nullable|date_format:Y-m-d H:i:s",
+                    'produced_at' => "nullable|date_format:Y-m-d H:i:s",
+                    'status' => 'nullable|in:' . join( ',', $this->_statuses()),
                 ], $additionalRules);
                 break;
             case 'additional':
