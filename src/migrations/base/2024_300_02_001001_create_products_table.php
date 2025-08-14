@@ -42,6 +42,7 @@ return new class extends Migration
             $table->string('template')->nullable();
             $table->text('summary')->nullable();
             $table->longText('content')->nullable();
+            $table->boolean('is_bulk')->nullable();
             $table->boolean('is_virtual')->default(0);
             $table->boolean('is_stackable')->default(0);
             $table->integer('is_tax')->default(0);

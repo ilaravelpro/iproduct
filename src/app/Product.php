@@ -155,6 +155,7 @@ class Product extends \iLaravel\Core\iApp\Model
                     'template' => "nullable|string",
                     'summary' => "nullable|string",
                     'content' => "nullable|string",
+                    'is_bulk' => "nullable|boolean",
                     'is_virtual' => "nullable|boolean",
                     'is_stackable' => "nullable|boolean",
                     'is_shippable' => "nullable|boolean",
