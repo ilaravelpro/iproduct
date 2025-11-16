@@ -6,7 +6,6 @@ use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -14,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('products_attachments', function (Blueprint $table) {
-            $table->integer('product_id')->unsigned();
-            $table->integer('attachment_id')->unsigned();
-            $table->string('type')->nullable();
-            $table->primary(['product_id' , 'attachment_id']);
+        Schema::smartCreate('products_articles', function (Blueprint $table) {
+            $table->bigInteger('product_id')->unsigned();
+            $table->bigInteger('article_id')->unsigned();
+            $table->primary(['product_id', 'article_id']);
         });
     }
 
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products_attachments');
+        Schema::dropIfExists('products_articles');
     }
 };

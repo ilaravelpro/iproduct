@@ -18,28 +18,28 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('price_olds', function (Blueprint $table) {
+        Schema::smartCreate('prices', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('creator_id')->nullable()->unsigned();
-            $table->foreign('creator_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('creator_id')->references('id')->on('users')->noActionOnDelete();
             $table->bigInteger('product_id')->nullable()->unsigned();
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->bigInteger('price_id')->nullable()->unsigned();
-            $table->foreign('price_id')->references('id')->on('prices')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->noActionOnDelete();
             $table->bigInteger('price_first')->nullable();
             $table->bigInteger('price_sale')->nullable();
             $table->bigInteger('price_cost')->nullable();
             $table->bigInteger('price_benefit')->nullable();
             $table->bigInteger('price_tax')->nullable();
             $table->bigInteger('price_pay')->nullable();
+            $table->bigInteger('unit')->nullable();
+            $table->double('quantity')->nullable();
             $table->bigInteger('stock')->nullable();
             $table->bigInteger('sales')->nullable();
             $table->bigInteger('presales')->nullable();
             $table->bigInteger('discount_type')->nullable();
             $table->bigInteger('discount_value')->nullable();
+            $table->boolean('is_tax')->nullable();
+            $table->boolean('is_discount_benefit')->nullable();
             $table->string('currency')->nullable()->default('IRT');
-            $table->integer('is_tax')->nullable();
-            $table->integer('is_discount_benefit')->nullable();
             $table->timestamp('discount_start_at')->nullable();
             $table->timestamp('discount_end_at')->nullable();
             $table->timestamps();
@@ -53,6 +53,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('price_olds');
+        Schema::dropIfExists('prices');
     }
 };

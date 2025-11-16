@@ -23,12 +23,12 @@ trait Product
     {
         $request->validationData();
         $requestArray = $request->toArray();
-        $product = $this->product()->updateOrCreate(["model" => class_name(static::class), "model_id" => $this->id], []);
+        $product = $this->product()->updateOrCreate(["model_type" => class_name(static::class), "model_id" => $this->id], []);
         $exceptAdditional = array_keys(method_exists($product, 'rules') ? $product->rules($request, 'additional', $product) : imodal("Product")::getRules($request, 'additional', $product));
         $exceptAdditional = array_map(function ($item) {
             return explode('.', $item)[0];
         }, $exceptAdditional);
-        $rules = tap($this->rules($request, 'product', $this) ?: $this->getProductRules($request));
+        $rules = $this->rules($request, 'product', $this) ?: $this->getProductRules($request);
         $keys = array_keys($rules);
         $fields = handel_fields(array_values(array_unique($exceptAdditional)), $keys, $requestArray);
         $dataProduct = [];
@@ -49,7 +49,8 @@ trait Product
 
     public function getProductRules($request, $context = null, $action = null)
     {
-        $rules = imodal("Product")::getRules($request, $action ?: (@tap($context ?: $this)->product ? "update" : "store"), @(tap($context ?: $this))->product);
+        $product = @($context ?: $this)->product;
+        $rules = imodal("Product")::getRules($request, $action ?: ($product ? "update" : "store"), $product);
         $rules['status'] = 'nullable|in:' . join(',', $this->_statuses());
         return $rules;
     }
@@ -126,5 +127,15 @@ trait Product
                 $q->{$index > 0 ? "orWhere" : "where"}($name, $value);
             }
         })->first();
+    }
+
+    public static function isExtended()
+    {
+        return method_exists(static::class, "product");
+    }
+
+    public function build_collection($model)
+    {
+        return $this->belongsTo($model, 'collection_id', 'id', 'product_collections');
     }
 }

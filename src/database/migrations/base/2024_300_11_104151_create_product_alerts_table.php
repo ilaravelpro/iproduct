@@ -18,12 +18,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('product_alerts', function (Blueprint $table) {
+        Schema::smartCreate('product_alerts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('creator_id')->nullable()->unsigned();
-            $table->foreign('creator_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('creator_id')->references('id')->on('users')->noActionOnDelete();
             $table->bigInteger('product_id')->nullable()->unsigned();
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->noActionOnDelete();
             $table->string('type')->nullable()->default('stock');
             $table->string('email')->nullable();
             $table->string('mobile')->nullable();

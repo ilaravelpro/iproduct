@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('products_tags', function (Blueprint $table) {
+        Schema::smartCreate('products_terms', function (Blueprint $table) {
             $table->bigInteger('product_id')->unsigned();
-            $table->bigInteger('tag_id')->unsigned();
-            $table->primary(['product_id', 'tag_id']);
+            $table->bigInteger('term_id')->unsigned();
+            $table->primary(['product_id', 'term_id']);
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products_tags');
+        Schema::dropIfExists('products_terms');
     }
 };

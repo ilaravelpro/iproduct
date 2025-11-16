@@ -14,9 +14,7 @@ class AppServiceProvider extends \Illuminate\Support\ServiceProvider
     public function boot()
     {
         if($this->app->runningInConsole())
-        {
-            $this->loadMigrationsFrom(iproduct_path('migrations/base'));
-        }
+            $this->loadMigrationsFrom(iproduct_path('database/migrations/base'));
         $this->mergeConfigFrom(iproduct_path('config/product.php'), 'ilaravel.main.iproduct');
     }
 

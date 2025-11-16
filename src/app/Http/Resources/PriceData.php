@@ -18,7 +18,7 @@ class PriceData extends ResourceData
         $data = parent::toArray($request);
         $data['price_sale'] = $this->price_sale;
         $data['price_sale_text'] = number_format($this->price_sale) . ' تومان';
-        $data['text'] = number_format($this->price_sale) . ' تومان';
+        $data['text'] = number_format($this->price_sale) . ' تومان' . ($this->unit ? " ({$this->unit})" : "");
         return $data;
     }
 }

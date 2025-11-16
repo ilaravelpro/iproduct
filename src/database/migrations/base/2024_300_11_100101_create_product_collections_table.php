@@ -18,21 +18,22 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('product_collections', function (Blueprint $table) {
+        Schema::smartCreate('product_collections', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('creator_id')->nullable()->unsigned();
-            $table->foreign('creator_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('creator_id')->references('id')->on('users')->noActionOnDelete();
             $table->bigInteger('image_id')->nullable()->unsigned();
-            $table->foreign('image_id')->references('id')->on('posts')->onDelete('cascade');
+            $table->foreign('image_id')->references('id')->on('posts')->noActionOnDelete();
             $table->bigInteger('parent_id')->nullable()->unsigned();
-            $table->foreign('parent_id')->references('id')->on('product_collections')->onDelete('cascade');
+            $table->foreign('parent_id')->references('id')->on('product_collections')->noActionOnDelete();
             $table->string('title')->nullable();
+            $table->string('title_second')->nullable();
             $table->string('slug')->nullable();
             $table->string('type')->nullable()->default('product');
             $table->string('template')->nullable();
             $table->text('summary')->nullable();
             $table->longText('content')->nullable();
-            $table->string('local')->nullable();
+            $table->string('locale')->nullable();
             $table->string('status')->default('draft');
             $table->timestamps();
         });

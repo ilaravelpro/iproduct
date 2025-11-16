@@ -11,12 +11,15 @@ namespace iLaravel\iProduct\iApp;
 
 class ProductCollection extends \iLaravel\Core\iApp\Model
 {
-    public static $s_prefix = 'NMPAY';
+    public static $s_prefix = 'NMPCN';
     public static $s_start = 24300000;
     public static $s_end = 728999999;
     public static $find_names = ['slug'];
 
+    public $set_slug = true;
+
     protected $table = "product_collections";
+
 
     public $files = ['image'];
 
@@ -56,12 +59,13 @@ class ProductCollection extends \iLaravel\Core\iApp\Model
             case 'update':
                 $rules = array_merge($rules, [
                     'title' => "required|string",
-                    'slug' => ['nullable', 'string'],
+                    'title_second' => "required|string",
+                    'slug' => "nullable|string|unique:product_collections,slug,{$arg1?->id},type," . static::$default_type,
                     'template' => "nullable|string",
                     'summary' => "nullable|string",
                     'content' => "nullable|string",
                     'order' => "nullable|numeric",
-                    'status' => 'nullable|in:' . join(',', $this->_statuses()),
+                    'status' => 'nullable|in:' . implode(',', $this->_statuses()),
                 ], $additionalRules);
                 break;
             case 'additional':

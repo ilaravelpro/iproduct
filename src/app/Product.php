@@ -20,6 +20,8 @@ class Product extends \iLaravel\Core\iApp\Model
     public $with_resource_data = ['collection', 'terms'];
     protected $table = "products";
 
+    public $set_slug = true;
+
     public function creator()
     {
         return $this->belongsTo(imodal('User'));
@@ -27,7 +29,7 @@ class Product extends \iLaravel\Core\iApp\Model
 
     public function model_item()
     {
-        return $this->hasOne(imodal($this->model), 'product_id');
+        return $this->morphTo(__FUNCTION__, "model_type", 'product_id');
     }
 
     public function tags()
@@ -86,7 +88,7 @@ class Product extends \iLaravel\Core\iApp\Model
     }
 
     public function getItemModelAttribute() {
-        return (imodal($this->model))::find($this->model_id);
+        return (imodal($this->model_type))::find($this->model_id);
     }
 
 
@@ -139,9 +141,11 @@ class Product extends \iLaravel\Core\iApp\Model
             case 'store':
             case 'update':
                 $rules = array_merge($rules, [
-                    'collection_id' => "nullable|exists:products_accessories,id",
+                    'collection_id' => "nullable|exists:product_collections,id",
                     'title' => "required|string",
-                    'slug' => ['nullable','string'],
+                    'title_second' => "nullable|string",
+                    'slug' => "nullable|string|unique:products,slug,{$arg1?->id},model_type," . $arg1->model_type,
+                    'code' => "nullable|string|unique:products,code,{$arg1?->id},model_type," . @$arg1?->model_type,
                     'weight' => "nullable|string",
                     'size_x' => "nullable|string",
                     'size_y' => "nullable|string",
@@ -163,8 +167,8 @@ class Product extends \iLaravel\Core\iApp\Model
                     'is_produced' => "nullable|boolean",
                     'is_buyout' => "nullable|boolean",
                     'order' => "nullable|numeric",
-                    'count_produced' => "nullable|numeric",
-                    'year_produced' => "nullable|date_format:Y",
+                    'count' => "nullable|numeric",
+                    'year' => "nullable|date_format:Y",
                     'first_produced_at' => "nullable|date_format:Y-m-d H:i:s",
                     'last_produced_at' => "nullable|date_format:Y-m-d H:i:s",
                     'produced_at' => "nullable|date_format:Y-m-d H:i:s",

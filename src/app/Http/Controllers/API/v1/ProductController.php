@@ -61,39 +61,26 @@ class ProductController extends \iLaravel\Core\iApp\Http\Controllers\API\ApiCont
                 'type' => 'text'
             ],
         ];
-        $model->with(['product', 'prices'/*, 'creators', 'sounds', 'electronics'*/]);
-        if ($request->related_id && ($product = imodal('Product')::findByAny($request->related_id))) {
+        $is_extended = $this->model::isExtended();
+        if ($is_extended)
+            $model->with(['product', 'prices']);
+        else $model->with(['prices']);
+        if ($request->related_id && ($item = $this->model::findByAny($request->related_id))) {
+            $product = $is_extended ? $item->product : $item;
             $model->where('id', '!=', $product->id);
-            switch ($request->type_data) {
-                case 'collection_products':
-                    $model->whereHas('product', function ($q) use ($product) {
-                        $q->where('collection_id', $product->product->collection_id);
-                    });
-                    break;
-                case 'products_terms':
-                    $model->whereExists(function ($query) use ($product) {
-                        $query->select(\DB::raw(1))
-                            ->from('products_terms')
-                            ->whereColumn('products_terms.product_id', 'products.product_id');
-                        $query->whereIn('products_terms.term_id', $product->terms->pluck('id')->toArray());
-                    });
-                    break;
-                default:
-                    $model
-                        ->where(function ($query) use ($product) {
-                            $query->whereExists(function ($query) use ($product) {
-                                $query->select(\DB::raw(1))
-                                    ->from('products_terms')
-                                    ->whereColumn('products_terms.product_id', 'products.product_id');
-                                $query->whereIn('products_terms.term_id', $product->terms->pluck('id')->toArray());
-                            });
-                            $query->orWhereExists(function ($query) use ($product) {
-                                $query->select(\DB::raw(1))
-                                    ->from('products_creators')
-                                    ->whereColumn('products_creators.product_id', 'products.id');
-                                $query->whereIn('products_creators.creator_id', $product->creators->pluck('id')->toArray());
-                            });
+            switch ($request->type_data?:"terms") {
+                case 'collection':
+                    if ($this->model::isExtended()) {
+                        $model->whereHas('product', function ($q) use ($product) {
+                            $q->where('collection_id', $product->collection_id);
                         });
+                    }else
+                        $model->where('collection_id', $product->collection_id);
+                    break;
+                case 'terms':
+                    $model->whereHas("terms", function ($query) use ($product) {
+                        $query->whereIn('terms.id', $product->terms->pluck('id')->toArray());
+                    });
                     break;
             }
         }

@@ -18,16 +18,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('product_awards', function (Blueprint $table) {
+        Schema::smartCreate('product_awards', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('creator_id')->nullable()->unsigned();
-            $table->foreign('creator_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('creator_id')->references('id')->on('users')->noActionOnDelete();
             $table->bigInteger('product_id')->nullable()->unsigned();
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->noActionOnDelete();
             $table->bigInteger('image_id')->nullable()->unsigned();
-            $table->foreign('image_id')->references('id')->on('posts')->onDelete('cascade');
+            $table->foreign('image_id')->references('id')->on('posts')->noActionOnDelete();
             $table->bigInteger('article_id')->nullable()->unsigned();
-            $table->foreign('article_id')->references('id')->on('posts')->onDelete('cascade');
+            $table->foreign('article_id')->references('id')->on('posts')->noActionOnDelete();
             $table->string('title')->nullable();
             $table->string('description')->nullable();
             $table->timestamp('awarded_at')->nullable();
