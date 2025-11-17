@@ -181,4 +181,9 @@ class Product extends \iLaravel\Core\iApp\Model
         }
         return $rules;
     }
+
+    public static function isExtended()
+    {
+        return method_exists(static::class, "product");
+    }
 }
